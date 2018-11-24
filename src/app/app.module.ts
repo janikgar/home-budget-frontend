@@ -10,11 +10,13 @@ library.add(fas);
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    JumbotronComponent
+    JumbotronComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
