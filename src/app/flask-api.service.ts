@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/catch';
+// import 'rxjs/add/observable/';
 import { API_URL } from './env';
+import { TableComponent } from './table/table.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,9 @@ export class FlaskApiService {
   //   return Observable.throw(err.message || 'Error: Unable to complete HTTP Request')
   // }
 
-  getTables(): Observable<> {
+  getTables(): Observable<any> {
     return this.http
-      .get(`${API_URL}/data`);
+      .get(`${API_URL}/`);
       // .catch(FlaskApiService._handleError);
   }
 

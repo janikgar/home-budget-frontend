@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoogleAuthService } from '../googleauth.service';
 
 @Component({
   selector: 'app-jumbotron',
@@ -10,6 +11,7 @@ export class JumbotronComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }
