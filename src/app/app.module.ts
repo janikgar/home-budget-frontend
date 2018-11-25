@@ -12,7 +12,8 @@ library.add(fas);
 import { AppComponent } from './app.component';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { TableComponent } from './table/table.component';
-import { FlaskApiService } from './flask-api.service';
+
+import { GoogleAuthService } from './googleAuth/google-auth.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { FlaskApiService } from './flask-api.service';
     HttpClientModule,
   ],
   providers: [
-    FlaskApiService,
+    GoogleAuthService,
   ],
   bootstrap: [AppComponent]
 })

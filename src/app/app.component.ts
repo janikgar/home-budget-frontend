@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { FlaskApiService } from './flask-api.service';
 
 @Component({
   selector: 'app-root',
@@ -12,20 +11,12 @@ export class AppComponent implements OnInit, OnDestroy {
   tableList = [];
   flaskApiSub: Subscription;
 
-  constructor(private flaskApi: FlaskApiService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.flaskApiSub = this.flaskApi
-      .getTables()
-      .subscribe(res => {
-        this.tableList = res;
-      },
-      console.error
-      );
   }
 
   ngOnDestroy() {
-    this.flaskApiSub.unsubscribe();
   }
 }

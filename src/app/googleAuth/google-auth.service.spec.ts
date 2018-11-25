@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FlaskApiService } from './flask-api.service';
+import { GoogleAuthService } from './google-auth.service';
 
-describe('FlaskApiService', () => {
+describe('GoogleAuthService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: FlaskApiService = TestBed.get(FlaskApiService);
+    const service: GoogleAuthService = TestBed.get(GoogleAuthService);
     expect(service).toBeTruthy();
   });
 });
