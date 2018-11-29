@@ -12,14 +12,17 @@ library.add(fas);
 import { AppComponent } from './app.component';
 import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { TableComponent } from './table/table.component';
+import { MessageComponent } from './message/message.component';
 
+import { MessageChannelService } from './message/message-channel.service';
 import { GoogleAuthService } from './googleAuth/google-auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     JumbotronComponent,
-    TableComponent
+    TableComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { GoogleAuthService } from './googleAuth/google-auth.service';
   ],
   providers: [
     GoogleAuthService,
+    MessageChannelService,
   ],
   bootstrap: [AppComponent]
 })

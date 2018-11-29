@@ -1,15 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { MessageChannelService } from '../message/message-channel.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleAuthService {
+  constructor(private http: HttpClient, private messageService: MessageChannelService) { }
 
-  private authUrl = '';
+  private log(message: string) {
+    console.log(message);
+    this.messageService.add(`${message}`)
+  }
 
-  constructor(private http: HttpClient) { }
+  private handleError<T> (operation='operation', result?: T) {
+    return(error: any): Observable<T> => {
+      console.error(error)
+      this.log(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
+  }
 
   getAuth(): Observable<any> {
     return this.http.get(
@@ -23,6 +35,9 @@ export class GoogleAuthService {
           'response_type': 'code',
         }
       }
+    ).pipe(
+      tap(_ => this.log('test')),
+      catchError(this.handleError<any>('googleAuth'))
     )
   }
   
