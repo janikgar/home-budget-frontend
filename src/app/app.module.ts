@@ -16,13 +16,17 @@ import { MessageComponent } from './message/message.component';
 
 import { MessageChannelService } from './message/message-channel.service';
 import { GoogleAuthService } from './googleAuth/google-auth.service';
+import { GoogleAuthComponent } from './googleAuth/google-auth.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     JumbotronComponent,
     TableComponent,
-    MessageComponent
+    MessageComponent,
+    GoogleAuthComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,

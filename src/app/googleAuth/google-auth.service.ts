@@ -27,6 +27,7 @@ export class GoogleAuthService {
     return this.http.get(
       'https://accounts.google.com/o/oauth2/v2/auth',
       {
+        responseType: 'text',
         params: {
           'client_id': '595882655149-kkk4ouuvd9ptuf51di12rv4vajkte523.apps.googleusercontent.com',
           'scope': 'https://www.googleapis.com/auth/spreadsheets.readonly',
@@ -36,7 +37,8 @@ export class GoogleAuthService {
         }
       }
     ).pipe(
-      tap(_ => this.log('test')),
+      tap(_ => this.log('Launching auth...')),
+      tap(x => this),
       catchError(this.handleError<any>('googleAuth'))
     )
   }

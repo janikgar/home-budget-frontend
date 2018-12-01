@@ -1,6 +1,9 @@
 <div class="card" *ngIf="messageChannel.messages.length">
   <div class="card-body">
     <p *ngFor="let message of messageChannel.messages">{{message}}</p>
-    <button class="btn btn-default">Clear</button>
+    <button class="btn btn-default"
+            (click)="messageChannel.clear()">
+      Clear
+    </button>
   </div>
 </div>
