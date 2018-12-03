@@ -18,6 +18,8 @@ import { MessageChannelService } from './message/message-channel.service';
 import { GoogleAuthService } from './googleAuth/google-auth.service';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { AuthFinishComponent } from './auth-finish/auth-finish.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { AuthFinishComponent } from './auth-finish/auth-finish.component';
     FontAwesomeModule,
     AppRoutingModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     GoogleAuthService,
