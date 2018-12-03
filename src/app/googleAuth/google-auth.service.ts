@@ -5,10 +5,11 @@ import { tap, catchError } from 'rxjs/operators';
 import { MessageChannelService } from '../message/message-channel.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GoogleAuthService {
-  constructor(private http: HttpClient, private messageService: MessageChannelService) { }
+  constructor(private http: HttpClient,
+              private messageService: MessageChannelService) { }
 
   private log(message: string) {
     console.log(message);
@@ -23,18 +24,24 @@ export class GoogleAuthService {
     };
   }
 
+  endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+  params = {
+    'scope': 'https://www.googleapis.com/auth/spreadsheets.readonly',
+    'access_type': 'offline',
+    'include_granted_scopes': 'true',
+    'state': 'state_parameter_passthrough_value',
+    'redirect_uri': 'http://localhost:4200/authFinish',
+    'response_type': 'code',
+    'client_id': '595882655149-kkk4ouuvd9ptuf51di12rv4vajkte523.apps.googleusercontent.com',
+  }
+ 
   getAuth(): Observable<any> {
     return this.http.get(
-      'https://accounts.google.com/o/oauth2/v2/auth',
+      this.endpoint,
       {
         responseType: 'text',
-        params: {
-          'client_id': '595882655149-kkk4ouuvd9ptuf51di12rv4vajkte523.apps.googleusercontent.com',
-          'scope': 'https://www.googleapis.com/auth/spreadsheets.readonly',
-          'redirect_uri': 'http://localhost:4200',
-          'access_type': 'offline',
-          'response_type': 'code',
-        }
+        params: this.params
       }
     ).pipe(
       tap(_ => this.log('Launching auth...')),

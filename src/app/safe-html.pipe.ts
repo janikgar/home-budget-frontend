@@ -9,6 +9,6 @@ export class SafeHtmlPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) { }
 
   transform(style) {
-    return this.sanitizer.bypassSecurityTrustHtml(style);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`<iframe>${style}</iframe>`);
   }
 }
