@@ -10,8 +10,6 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'tiller-home';
   tableList = [];
   flaskApiSub: Subscription;
-  db;
-  request;
 
   constructor() {
   }

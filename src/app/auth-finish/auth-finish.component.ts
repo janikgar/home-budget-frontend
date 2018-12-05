@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageChannelService } from '../message/message-channel.service';
-import { IdbService } from '../idb/idb.service';
+import { GoogleAuthService } from '../googleAuth/google-auth.service';
 
 @Component({
   selector: 'app-auth-finish',
@@ -13,11 +13,15 @@ export class AuthFinishComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private messageService: MessageChannelService,
-              private idb: IdbService) { }
+              private googleAuth: GoogleAuthService,
+              ) { }
 
   ngOnInit() {
-   const params = this.route.snapshot.queryParamMap;
+    const params = this.route.snapshot.queryParamMap;
     if (params.has('code')) {
+      window.localStorage.setItem('authCode', params.get('code'));
+      this.googleAuth.tokenParams['code'] = params.get('code');
+      this.googleAuth.makeRequest(this.googleAuth.tokenParams, this.googleAuth.tokenEndpoint);
     } else if (params.has('error')) {
       this.messageService.add(params.get('error'));
     }
