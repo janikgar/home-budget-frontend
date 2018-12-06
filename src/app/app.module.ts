@@ -15,6 +15,7 @@ import { JumbotronComponent } from './jumbotron/jumbotron.component';
 import { TableComponent } from './table/table.component';
 import { MessageComponent } from './message/message.component';
 import { AuthFinishComponent } from './auth-finish/auth-finish.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { MessageChannelService } from './message/message-channel.service';
 import { GoogleAuthService } from './googleAuth/google-auth.service';
@@ -27,7 +28,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     TableComponent,
     MessageComponent,
     SafeHtmlPipe,
-    AuthFinishComponent
+    AuthFinishComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

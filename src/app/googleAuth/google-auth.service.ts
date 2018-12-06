@@ -44,14 +44,14 @@ export class GoogleAuthService {
     'state': 'state_parameter_passthrough_value',
     'redirect_uri': 'http://localhost:4200/authFinish',
     'response_type': 'code',
-    'client_id': data.installed.client_id,
+    'client_id': data.web.client_id,
   }
 
   tokenParams = {
     'code': '',
-    'client_id': data.installed.client_id,
-    'client_secret': data.installed.client_secret,
-    'redirect_uri': 'http://localhost:4200/dashboard',
+    'client_id': data.web.client_id,
+    'client_secret': data.web.client_secret,
+    'redirect_uri': 'http://localhost:4200/authFinish',
     'grant_type': 'authorization_code'
   }
 
@@ -83,17 +83,22 @@ export class GoogleAuthService {
     }
   }
  
-  getAuthCode(): Observable<any> {
-    return this.http.get(
-      this.authEndpoint,
-      {
-        responseType: 'text',
-        params: this.params
+  getAuthToken(code: string) {
+    //alert(code);
+    this.tokenParams.code = code;
+    var foo = this.http.post(
+      this.tokenEndpoint,
+      this.tokenParams
+    )
+    foo.subscribe(
+      response => {
+        for (let property in response) {
+          window.localStorage.setItem(property, response[property]);
+        }
+      },
+      err => {
+        console.error(err);
       }
-    ).pipe(
-      tap(_ => this.log('Launching auth...')),
-      catchError(this.handleError<any>('googleAuth'))
     )
   }
-  
 }
