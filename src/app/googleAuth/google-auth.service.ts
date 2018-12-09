@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -10,7 +11,8 @@ import * as data from '../oauth2.json';
 })
 export class GoogleAuthService {
   constructor(private http: HttpClient,
-              private messageService: MessageChannelService) {
+              private messageService: MessageChannelService,
+              private location: Location) {
               }
   existingAuth = false;
   
@@ -94,6 +96,7 @@ export class GoogleAuthService {
       response => {
         for (let property in response) {
           window.localStorage.setItem(property, response[property]);
+          this.location.go('table');
         }
       },
       err => {
