@@ -9,8 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'jumbotron', pathMatch: 'full'},
   { path: 'jumbotron', component: JumbotronComponent},
   { path: 'dashboard', component: DashboardComponent},
-  { path: 'authFinish', component: AuthFinishComponent},
-  { path: 'table', component: TableComponent}
+  { path: 'authFinish', component: AuthFinishComponent, children: [{ path: 'table', component: TableComponent }]}
 ];
 
 @NgModule({

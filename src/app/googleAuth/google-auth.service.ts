@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
 import { MessageChannelService } from '../message/message-channel.service';
 import * as data from '../oauth2.json';
+import { TillerDbService } from '../tillerDb/tiller-db.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,30 +12,24 @@ import * as data from '../oauth2.json';
 export class GoogleAuthService {
   constructor(private http: HttpClient,
               private messageService: MessageChannelService,
-              private location: Location) {
+              private location: Location,
+              private tillerDb: TillerDbService) {
               }
   existingAuth = false;
+  configDb = this.tillerDb.config_db;
   
   ngOnInit() {
-    if (window.localStorage.getItem('authCode')) {
-      this.existingAuth = true;
-      this.tokenParams['code'] = window.localStorage.getItem('authCode');
-    }            
+    this.existingAuth = true;
+    let req = this.configDb.getItem('authCode');
+    req.then( value => {
+      this.messageService.add('Authentication successful');
+      this.tokenParams['code'] = value.toString();
+    }).catch( err => {
+      console.log(err);
+      this.messageService.add(err);
+    });
   }
   
-  private log(message: string) {
-    console.log(message);
-    this.messageService.add(`${message}`)
-  }
-
-  private handleError<T> (operation='operation', result?: T) {
-    return(error: any): Observable<T> => {
-      console.error(error)
-      this.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
-  }
-
   authEndpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
   tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
 
@@ -67,10 +61,10 @@ export class GoogleAuthService {
       input.setAttribute('name', element);
       input.setAttribute('value', params[element]);
       form.appendChild(input);
-      document.body.appendChild(form);
-      form.submit();
-      this.messageService.add('Beginning Google Auth...');
     }
+    document.body.appendChild(form);
+    this.messageService.add('Beginning Google Auth...');
+    form.submit();
   }
 
   startAuth() {
@@ -84,6 +78,21 @@ export class GoogleAuthService {
       this.makeRequest(params, endpoint);
     }
   }
+
+  getSheet(token: string, sheet_id: string): string {
+    this.http.get(
+      `https://sheets.googleapis.com/v4/spreadsheets/${sheet_id}/values/Transactions!A1:O`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }
+    ).toPromise().then( response => {
+      return response;
+    }).catch( err => {
+      this.messageService.add(err);
+    })
+    return "";
+  }
  
   getAuthToken(code: string) {
     //alert(code);
@@ -95,8 +104,14 @@ export class GoogleAuthService {
     foo.subscribe(
       response => {
         for (let property in response) {
-          window.localStorage.setItem(property, response[property]);
-          this.location.go('table');
+          // window.localStorage.setItem(property, response[property]);
+          this.configDb.setItem(property, response[property])
+            .then( () => {
+              this.location.go('table');
+            }).catch( err => {
+              console.log(err);
+              this.messageService.add('err');
+            });
         }
       },
       err => {

@@ -19,7 +19,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { MessageChannelService } from './message/message-channel.service';
 import { GoogleAuthService } from './googleAuth/google-auth.service';
-import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     JumbotronComponent,
     TableComponent,
     MessageComponent,
-    SafeHtmlPipe,
     AuthFinishComponent,
     DashboardComponent
   ],

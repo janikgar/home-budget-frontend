@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +8,8 @@ import { Subscription } from 'rxjs/Subscription';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'tiller-home';
   tableList = [];
-  flaskApiSub: Subscription;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
   }

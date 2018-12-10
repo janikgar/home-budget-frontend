@@ -1,14 +1,14 @@
 <div class="card">
   <div class="card-body">
-    <table class="table table-striped">
+    <table class="table table-striped table-responsive">
       <thead>
         <tr>
-          <th *ngFor="let cell of table[0].slice(0, 4)">{{cell}}</th>
+          <th *ngFor="let cell of displayKeys">{{cell}}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of table.slice(1, 10)">
-          <td *ngFor="let cell of row.slice(0, 4)">{{cell}}</td>
+        <tr *ngFor="let row of table">
+          <td *ngFor="let cell of row">{{cell}}</td>
         </tr>
       </tbody>
     </table>
